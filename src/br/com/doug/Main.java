@@ -154,13 +154,14 @@ public class Main {
 
         System.out.println("Tem certeza que deseja limpar o jogo inteiro? (O progresso será perdido)");
         var confirm = scanner.next();
-        while (!confirm.equalsIgnoreCase("sim") || !confirm.equalsIgnoreCase("não")) {
+        while (!confirm.equalsIgnoreCase("sim") && !confirm.equalsIgnoreCase("não")) {
             System.out.println("Informe 'sim' ou 'não'");
             confirm = scanner.next();
         }
 
         if (confirm.equalsIgnoreCase("sim")){
             board.reset();
+            System.out.println("O jogo foi resetado");
         }
     }
 
@@ -168,6 +169,16 @@ public class Main {
         if (isNull(board)) {
             System.out.println("O jogo ainda não foi iniciado");
             return;
+        }
+
+        if (board.gameIsFinished()){
+            System.out.println("Parabéns! Você concluiu o jogo");
+            showCurrentGame();
+            board = null;
+        } else if (board.hasErrors()){
+            System.out.println("Seu jogo contém erros, verifique seu board e ajuste-o");
+        } else {
+            System.out.println("Você ainda precisa preencher algum espaço.");
         }
     }
 
