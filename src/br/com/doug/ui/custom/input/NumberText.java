@@ -1,20 +1,20 @@
 package br.com.doug.ui.custom.input;
 
 import br.com.doug.model.Space;
+import br.com.doug.service.EventEnum;
+import br.com.doug.service.EventListener;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 
+import static br.com.doug.service.EventEnum.CLEAR_SPACE;
 import static java.awt.Font.PLAIN;
 
-public class NumberText extends JTextField {
-
-    private final Space space;
+public class NumberText extends JTextField implements EventListener {
 
     public NumberText(final Space space) {
-        this.space = space;
         var dimension = new Dimension(50, 50);
         this.setSize(dimension);
         this.setPreferredSize(dimension);
@@ -53,5 +53,12 @@ public class NumberText extends JTextField {
                 space.setActual(Integer.parseInt(getText()));
             }
         });
+    }
+
+    @Override
+    public void update(EventEnum eventType) {
+        if (eventType.equals(CLEAR_SPACE) && (this.isEnabled())){
+            this.setText("");
+        }
     }
 }
